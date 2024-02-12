@@ -59,6 +59,18 @@ def computeOptimalPolicy(mdp, V):
     dictionary.
     """
     # BEGIN_YOUR_CODE (around 4 lines of code expected)
+    pi = {}
+    for state in mdp.states:
+        max = 0
+        for action in mdp.actions(state):
+            new = computeQ(mdp,V,state,action)
+            if(new>max):
+                max = new
+                best_action = action
+        pi[state] = best_action
+    return pi
+
+
     raise Exception("Not implemented yet")
     # END_YOUR_CODE
 
