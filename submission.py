@@ -1,5 +1,5 @@
 import collections, util, math, random
-
+import math
 ############################################################
 # Problem 4.1.1
 
@@ -29,8 +29,24 @@ def policyEvaluation(mdp, V, pi, epsilon=0.001):
     Initialize the computation with |V|.  Note that |V| and |pi| are
     dictionaries.
     """
+
     # BEGIN_YOUR_CODE (around 7 lines of code expected)
-    raise Exception("Not implemented yet")
+    V_new = {} 
+    cont = True
+    while cont:
+        V_new = {} 
+        cont = False
+        for state in mdp.states:
+            V_new[state] = computeQ(mdp,V,state,pi[state])
+            if (abs(V_new[state]-V[state]))>epsilon:
+                cont = True
+        V = V_new
+    return V
+
+    
+        
+   
+    
     # END_YOUR_CODE
 
 ############################################################
