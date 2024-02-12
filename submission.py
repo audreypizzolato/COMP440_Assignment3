@@ -1,5 +1,4 @@
 import collections, util, math, random
-import math
 ############################################################
 # Problem 4.1.1
 
@@ -64,14 +63,12 @@ def computeOptimalPolicy(mdp, V):
         max = 0
         for action in mdp.actions(state):
             new = computeQ(mdp,V,state,action)
-            if(new>max):
+            if(new>=max):
                 max = new
                 best_action = action
         pi[state] = best_action
     return pi
 
-
-    raise Exception("Not implemented yet")
     # END_YOUR_CODE
 
 ############################################################
@@ -80,12 +77,25 @@ def computeOptimalPolicy(mdp, V):
 class PolicyIteration(util.MDPAlgorithm):
     def solve(self, mdp, epsilon=0.001):
         mdp.computeStates()
-        # compute |V| and |pi|, which should both be dicts
-        # BEGIN_YOUR_CODE (around 8 lines of code expected)
-        raise Exception("Not implemented yet")
-        # END_YOUR_CODE
-        self.pi = pi
+        V = {}
+        for state in mdp.states:
+            V[state]=0
         self.V = V
+        cont = True
+        pi = computeOptimalPolicy(mdp, V)
+        while cont:
+            old_pi =pi
+            pi = computeOptimalPolicy(mdp, V)
+            old_V = V
+            V = policyEvaluation(mdp, V, pi, epsilon)
+            if(old_pi == pi and old_V == V):
+                cont = False
+
+        self.V = V
+        self.pi = pi
+        return
+        # END_YOUR_CODE
+        
 
 ############################################################
 # Problem 4.1.5
