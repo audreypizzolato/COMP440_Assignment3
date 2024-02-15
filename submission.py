@@ -80,7 +80,6 @@ class PolicyIteration(util.MDPAlgorithm):
         V = {}
         for state in mdp.states:
             V[state]=0
-        self.V = V
         cont = True
         pi = computeOptimalPolicy(mdp, V)
         while cont:
@@ -103,11 +102,22 @@ class PolicyIteration(util.MDPAlgorithm):
 class ValueIteration(util.MDPAlgorithm):
     def solve(self, mdp, epsilon=0.001):
         mdp.computeStates()
-        # BEGIN_YOUR_CODE (around 10 lines of code expected)
-        raise Exception("Not implemented yet")
-        # END_YOUR_CODE
-        self.pi = pi
+        V = {}
+        for state in mdp.states:
+            V[state]=0
+        cont = True
+        while cont:
+            pi = computeOptimalPolicy(mdp, V)
+            V_new = {} 
+            cont = False
+            for state in mdp.states:
+                V_new[state] = computeQ(mdp,V,state,pi[state])
+                if (abs(V_new[state]-V[state]))>epsilon:
+                    cont = True
+            V = V_new
         self.V = V
+        self.pi = pi
+        return
 
 ############################################################
 # Problem 4.1.6
