@@ -305,6 +305,12 @@ def peekingMDP():
     least 10% of the time.
     """
     # BEGIN_YOUR_CODE (around 2 lines of code expected)
-    raise Exception("Not implemented yet")
+    mdp = BlackjackMDP(cardValues=[4, 16], multiplicity=15,
+                                   threshold=20, peekCost=1)
+    mdp.states = mdp.startState()
+    print(mdp.states)
+    print(mdp.computeStates())
+    
+    return mdp
     # END_YOUR_CODE
 
