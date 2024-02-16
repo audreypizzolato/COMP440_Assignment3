@@ -270,11 +270,11 @@ class BlackjackMDP(util.MDP):
                 new_state.append(state[0])
                 if state[2][i]>0:
                     new_state.append(i)
-                new_state.append(state[2])
-                result.append(new_state)
-                result.append(state[2][i]/sumCards)
-                result.append(-1*self.peekCost)
-                successor.append(result)
+                    new_state.append(state[2])
+                    result.append(new_state)
+                    result.append(state[2][i]/sumCards)
+                    result.append(-1*self.peekCost)
+                    successor.append(result)
                 i+=1
         if action == 'Quit':
             if state[2] == None or sumCards == 0:
@@ -313,7 +313,7 @@ def peekingMDP():
     least 10% of the time.
     """
     # BEGIN_YOUR_CODE (around 2 lines of code expected)
-    return BlackjackMDP(cardValues=[2, 3, 4, 10, 19], multiplicity=15, threshold=20, peekCost=1)
+    return BlackjackMDP(cardValues=[2,6,4,18], multiplicity=7, threshold=20, peekCost=1)
 
     # END_YOUR_CODE
 
