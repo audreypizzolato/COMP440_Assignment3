@@ -287,6 +287,14 @@ class BlackjackMDP(util.MDP):
             result.append(1)
             result.append(new_state[0])
             successor.append(result)
+        
+        new_successors = []
+        for val in successor:
+            if val[0][2] != None:
+                val[0][2] = tuple(val[0][2])
+            val[0] = tuple(val[0])
+            new_successors.append(tuple(val))
+        
         return successor
 
 
@@ -305,12 +313,7 @@ def peekingMDP():
     least 10% of the time.
     """
     # BEGIN_YOUR_CODE (around 2 lines of code expected)
-    mdp = BlackjackMDP(cardValues=[4, 16], multiplicity=15,
-                                   threshold=20, peekCost=1)
-    mdp.states = mdp.startState()
-    print(mdp.states)
-    print(mdp.computeStates())
-    
-    return mdp
+    return BlackjackMDP(cardValues=[2, 3, 4, 10, 19], multiplicity=15, threshold=20, peekCost=1)
+
     # END_YOUR_CODE
 
