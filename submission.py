@@ -313,7 +313,7 @@ def peekingMDP():
     least 10% of the time.
     """
     # BEGIN_YOUR_CODE (around 2 lines of code expected)
-    return BlackjackMDP(cardValues=[2,6,4,18], multiplicity=7, threshold=20, peekCost=1)
+    return BlackjackMDP(cardValues=[2,4,18], multiplicity=8, threshold=20, peekCost=1)
 
     # END_YOUR_CODE
 
