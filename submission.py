@@ -205,8 +205,93 @@ class BlackjackMDP(util.MDP):
     #   don't include that state in the list returned by succAndProbReward.
     def succAndProbReward(self, state, action):
         # BEGIN_YOUR_CODE (around 50 lines of code expected)
-        raise Exception("Not implemented yet")
-        # END_YOUR_CODE
+        successor = []
+        if state[2] != None:
+            sumCards = sum(state[2])
+        if action == 'Take':
+            if state[2]==None:
+                return []
+            
+            if state[1] == None:
+                i=0
+                for card in self.cardValues:
+                    result = []
+                    new_state = []
+                    new_state.append(state[0]+card)
+                    new_state.append(None)
+                    new_cards = state[2]
+                    new_cards = list(new_cards)
+                    new_cards[i] = new_cards[i]-1
+                    if new_cards[i]>=0:
+                        new_state.append(new_cards)
+                        result.append(new_state)
+                        result.append(state[2][i]/sumCards)
+                        result.append(0)
+                        successor.append(result)
+                    i+=1
+            else:
+                result = []
+                new_state = state
+                new_state = []
+                new_state.append(state[0]+self.cardValues[state[1]])
+                new_state.append(None)
+                new_cards = state[2]
+                new_cards = list(new_cards)
+                new_cards[state[1]] = new_cards[state[1]] - 1
+                new_state.append(new_cards)
+                result.append(new_state)
+                result.append(1)
+                result.append(0)
+                successor.append(result)
+                
+            if sumCards == 1:
+                for val in successor:
+                    val[0][2] = None
+                    if val[0][0]>self.threshold:
+                        val[0][2] = None
+                    else:
+                        val[2] = val[0][0]
+
+            for val in successor:
+                if val[0][0]>self.threshold:
+                    val[2]=0
+                    val[0][2] = None
+                
+
+                
+
+        if action == 'Peek':
+            if state[1] != None or state[2] == None:
+                return []
+            i=0
+            for card in self.cardValues:
+                result = []
+                new_state = []
+                new_state.append(state[0])
+                if state[2][i]>0:
+                    new_state.append(i)
+                new_state.append(state[2])
+                result.append(new_state)
+                result.append(state[2][i]/sumCards)
+                result.append(-1*self.peekCost)
+                successor.append(result)
+                i+=1
+        if action == 'Quit':
+            if state[2] == None or sumCards == 0:
+                return []
+            result = []
+            new_state = state
+            new_state = list(new_state)
+            new_state[2] = None
+            result.append(new_state)
+            result.append(1)
+            result.append(new_state[0])
+            successor.append(result)
+        return successor
+
+
+
+            
 
     def discount(self):
         return 1
